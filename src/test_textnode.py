@@ -20,5 +20,6 @@ class TestTextNode(unittest.TestCase):
         node = TextNode("This bold text", TextType.BOLD)
         node2 = TextNode("This is different bold text", TextType.BOLD)
         self.assertNotEqual(node, node2)
+
 if __name__ == "__main__":
     unittest.main()
