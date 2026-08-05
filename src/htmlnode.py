@@ -14,7 +14,7 @@ class HTMLNode: # basic class structure for HTML node, input variables are all o
 
     def props_to_html(self) -> str: # converts the given "props" value to actual HTML format
         props_html = ""
-        if self.props is not None:
+        if self.props is not None and self.tag is not None:
             for prop in self.props:
                 props_html += f' {prop}="{self.props[prop]}"'
         return props_html
@@ -35,3 +35,17 @@ class LeafNode(HTMLNode): # child class for nodes that have no children
 
     def __repr__(self): # doesn't include the children value unlike the parent class
         return f"LeafNode({self.tag}, {self.value}, {self.props})"
+
+class ParentNode(HTMLNode): # any node that is not a leaf node, tag and children are required, does not take "value"
+    def __init__(self, tag: str, children: list[HTMLNode], props: dict | None = None):
+        super().__init__(tag, None, children, props)
+
+    def to_html(self) -> str:
+        if not self.tag:
+            raise ValueError("Error: Tag is required for parent node")
+        if not self.children:
+            raise ValueError("Error: Parent node must have children")
+        inner_string = ""
+        for child in self.children:
+            inner_string += child.to_html()
+        return f"<{self.tag}{self.props_to_html()}>" + inner_string + f"</{self.tag}>"
