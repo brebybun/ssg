@@ -5,7 +5,7 @@ class TextType(Enum):
     TEXT = "text"
     BOLD = "bold"
     ITALIC = "italic"
-    CODE_TEXT = "code"
+    CODE = "code"
     LINK = "link"
     IMAGE = "image"
 
